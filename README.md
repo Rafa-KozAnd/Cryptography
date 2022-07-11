@@ -29,7 +29,7 @@
 
 - 'CIFRA DE CÉSAR':
 <div>
-  <img align="center" height="300" widht="300" src="/Print/CifraCesar.jpg" />
+  <img align="center" height="300" widht="300" src="/Print/Cesar.jpg" />
 </div><br>
 
 - And more (Binário, Hexadecimal, Zenit Polar, Tenis Polar and Milet Polar).
