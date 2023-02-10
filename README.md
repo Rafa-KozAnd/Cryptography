@@ -1,7 +1,15 @@
 # Cryptography
 
+<p align="center">
+<img src="http://img.shields.io/static/v1?label=STATUS&message=Concluded&color=blue&style=flat"/>
+</p>
+
+<p align="center">
+<img alt="GitHub repo file count" src="https://img.shields.io/github/directory-file-count/Rafa-KozAnd/Cryptography">
+<img alt="GitHub repo size" src="https://img.shields.io/github/repo-size/Rafa-KozAnd/Cryptography">
+</p>
+
 - Project Name: 'Cryptography';
-- Status: Concluded;
 - Languages: 'Python';
 - Softwares/Work Tools: 'V.S. Code';
 - Resume: Program that encrypts a message using some known methods.;
