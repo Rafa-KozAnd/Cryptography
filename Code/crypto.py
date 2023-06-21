@@ -5,14 +5,17 @@ def menu():
     print("\n\nCriptografar Mensagens: \n")
     print(" 1 - ROT-13")
     print(" 2 - TROCA DE DOIS VIZINHOS")
-    print(" 3 - SEQUÊNCIA DO TECLADO")
-    print(" 4 - CIFRA DE CÉSAR")
+    print(" 3 - SEQUENCIA DO TECLADO")
+    print(" 4 - CIFRA DE CESAR")
     print(" 5 - ZENIT POLAR")
     print(" 6 - TENIS POLAR")
     print(" 7 - MILET POLAR")
-    print(" 8 - BINÁRIO")
+    print(" 8 - BINARIO")
     print(" 9 - HEXADECIMAL")
-    print("10 - CÓDIGO MORSE\n")
+    print("10 - CODIGO MORSE")
+    print("11 - VERNAM-MAUBORGNE")
+    print("12 - VIGENERE")
+    print("13 - RAIL FENCE")
 
     choice = input("Escolha uma criptografia: \n")
     decypher = input("[1] - Cifrar ou [2] - Decifrar?\n")
@@ -24,7 +27,7 @@ def menu():
         msg = input("Digite o criptograma a ser decifrado:\n").upper()
         decypher = False
     else:
-        return "Opção Inváida!"
+        return "Opcao Invalida!"
 
     if choice == "1":
         print(criptoRot13(msg))
@@ -55,6 +58,15 @@ def menu():
         return menu()
     elif choice == "10":
         print(criptoCodMorse(msg, decypher))
+        return menu()
+    elif choice == "11":
+        print(criptoVernamMauborgne(msg))
+        return menu()
+    elif choice == "12":
+        print(criptoVigenere(msg, decypher))
+        return menu()
+    elif choice == "13":
+        print(criptoRailFence(msg))
         return menu()
     else:
         print("Opção Inválida")
@@ -338,4 +350,71 @@ def criptoCodMorse(msg: str, decypher: bool) -> str:
         return newMsg
 
 
+
+# 11 - VERNAM MAUBORGNE
+def criptoVernamMauborgne(msg: str) -> str:
+    encrypted_msg = ""
+
+    key = input("Entre com a Chave a ser usada:")
+    key_length = len(key)
+
+    for i in range(len(msg)):
+        char = msg[i]
+        key_char = key[i % key_length]
+
+        # Aplicar operação XOR entre o caractere da mensagem e o caractere da chave
+        encrypted_char = chr(ord(char) ^ ord(key_char))
+
+        encrypted_msg += encrypted_char
+
+    return encrypted_msg
+
+
+
+# 12 - VIGENÈRE
+def criptoVigenere(msg: str, decypher: bool = False) -> str:
+    key = input("Digite a chave: ").upper()
+    key_length = len(key)
+    msg = msg.upper()
+
+    newMsg = ""
+
+    for i in range(len(msg)):
+        char = msg[i]
+        key_char = key[i % key_length]
+
+        if decypher:
+            encrypted_char = chr((ord(char) + ord(key_char)) % 26 + 65)
+            newMsg += encrypted_char
+        else:
+            decrypted_char = chr((ord(char) - ord(key_char)) % 26 + 65)
+            newMsg += decrypted_char
+
+    return newMsg
+
+
+
+# 13 - RAIL FENCE
+def criptoRailFence(msg: str) -> str:
+    depth = int(input("Digite a profundidade do Rail Fence: "))
+    msg_length = len(msg)
+
+    fence = [[''] * msg_length for _ in range(depth)]
+    rail = 0
+    direction = 1
+
+    for char in msg:
+        fence[rail][fence_idx] = char
+        rail += direction
+
+        if rail == 0 or rail == depth - 1:
+            direction *= -1
+
+    newMsg = ''.join([char for rail in fence for char in rail if char != ''])
+
+    return newMsg
+
+
+
+# <-------------------------------------------------------> 
 print(menu())
