@@ -66,7 +66,7 @@ def menu():
         print(criptoVigenere(msg, decypher))
         return menu()
     elif choice == "13":
-        print(criptoRailFence(msg))
+        print(criptoRailFence(msg, decypher))
         return menu()
     else:
         print("Opção Inválida")
@@ -353,21 +353,27 @@ def criptoCodMorse(msg: str, decypher: bool) -> str:
 
 # 11 - VERNAM MAUBORGNE
 def criptoVernamMauborgne(msg: str) -> str:
-    encrypted_msg = ""
+    key = input("Entre com a chave: ").upper()
 
-    key = input("Entre com a Chave a ser usada:")
-    key_length = len(key)
+    if len(key) != len(msg):
+        return "Erro: O tamanho da chave tem de ser o mesmo da mensagem."
+
+    msg = msg.upper()
+
+    newMsg = ""
 
     for i in range(len(msg)):
         char = msg[i]
-        key_char = key[i % key_length]
+        key_char = key[i]
 
-        # Aplicar operação XOR entre o caractere da mensagem e o caractere da chave
-        encrypted_char = chr(ord(char) ^ ord(key_char))
+        if not char.isalpha():
+            newMsg += char
+        else:
+            char_code = (ord(char) - 65) ^ (ord(key_char) - 65)
+            new_char = chr(char_code + 65)
+            newMsg += new_char
 
-        encrypted_msg += encrypted_char
-
-    return encrypted_msg
+    return newMsg
 
 
 
@@ -379,15 +385,16 @@ def criptoVigenere(msg: str, decypher: bool = False) -> str:
 
     newMsg = ""
 
+
     for i in range(len(msg)):
         char = msg[i]
         key_char = key[i % key_length]
-
+        shift = ord(key[i % key_length]) - 65
         if decypher:
             encrypted_char = chr((ord(char) + ord(key_char)) % 26 + 65)
             newMsg += encrypted_char
         else:
-            decrypted_char = chr((ord(char) - ord(key_char)) % 26 + 65)
+            decrypted_char = chr((ord(char) - ord(key_char) + 26) % 26 + 65)  # Modificação para descriptografar
             newMsg += decrypted_char
 
     return newMsg
@@ -395,25 +402,82 @@ def criptoVigenere(msg: str, decypher: bool = False) -> str:
 
 
 # 13 - RAIL FENCE
-def criptoRailFence(msg: str) -> str:
+# def criptoRailFence(msg: str) -> str:
+#     depth = int(input("Digite a profundidade do Rail Fence: "))
+#     msg_length = len(msg)
+
+#     # Initialize a 2D array with spaces
+#     rail_fence = [[" " for _ in range(msg_length)] for _ in range(depth)]
+
+#     # Fill the 2D array with characters from the message
+#     row, direction = 0, 1
+#     for i in range(msg_length):
+#         rail_fence[row][i] = msg[i]
+#         if row == depth - 1:
+#             direction = -1
+#         elif row == 0:
+#             direction = 1
+#         row += direction
+
+#     # Read the characters from the 2D array in the rail order
+#     new_msg = ""
+#     for row in rail_fence:
+#         new_msg += "".join(row)
+
+#     return new_msg
+
+
+def criptoRailFence(msg: str, decypher: bool = False) -> str:
     depth = int(input("Digite a profundidade do Rail Fence: "))
     msg_length = len(msg)
 
-    fence = [[''] * msg_length for _ in range(depth)]
-    rail = 0
-    direction = 1
+    if decypher:
+        rail_fence = [[" " for _ in range(msg_length)] for _ in range(depth)]
 
-    for char in msg:
-        fence[rail][fence_idx] = char
-        rail += direction
+        row, direction = 0, 1
+        for i in range(msg_length):
+            rail_fence[row][i] = msg[i]
+            if row == depth - 1:
+                direction = -1
+            elif row == 0:
+                direction = 1
+            row += direction
 
-        if rail == 0 or rail == depth - 1:
-            direction *= -1
+        new_msg = ""
+        for row in rail_fence:
+            new_msg += "".join(row)
 
-    newMsg = ''.join([char for rail in fence for char in rail if char != ''])
+        return new_msg
+    else:
+        rail_fence = [[" " for _ in range(msg_length)] for _ in range(depth)]
 
-    return newMsg
+        row, direction = 0, 1
+        for i in range(msg_length):
+            rail_fence[row][i] = "x"
+            if row == depth - 1:
+                direction = -1
+            elif row == 0:
+                direction = 1
+            row += direction
 
+        idx = 0
+        for r in range(depth):
+            for c in range(msg_length):
+                if rail_fence[r][c] == "x":
+                    rail_fence[r][c] = msg[idx]
+                    idx += 1
+
+        new_msg = ""
+        row, direction = 0, 1
+        for i in range(msg_length):
+            new_msg += rail_fence[row][i]
+            if row == depth - 1:
+                direction = -1
+            elif row == 0:
+                direction = 1
+            row += direction
+
+        return new_msg
 
 
 # <-------------------------------------------------------> 
