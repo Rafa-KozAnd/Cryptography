@@ -14,9 +14,9 @@
 - Softwares/Work Tools: 'V.S. Code';
 - Resume: Program that encrypts a message using some known methods.;
 - Obs: Example;
-- Version: v.1.5.0
+- Version: v.1.8.6
 
-- Last Update Date: 11/07/2022.
+- Last Update Date: 25/07/2023.
 
 ##
 
@@ -40,4 +40,4 @@
   <img align="center" height="300" widht="300" src="/Print/Cesar.jpg" />
 </div><br>
 
-- And more (Binário, Hexadecimal, Zenit Polar, Tenis Polar and Milet Polar).
+- And more (Binário, Hexadecimal, Zenit Polar, Tenis Polar, Milet Polar, Vernam Mauborgne, Vigenère and Rail Fence).
