@@ -402,31 +402,6 @@ def criptoVigenere(msg: str, decypher: bool = False) -> str:
 
 
 # 13 - RAIL FENCE
-# def criptoRailFence(msg: str) -> str:
-#     depth = int(input("Digite a profundidade do Rail Fence: "))
-#     msg_length = len(msg)
-
-#     # Initialize a 2D array with spaces
-#     rail_fence = [[" " for _ in range(msg_length)] for _ in range(depth)]
-
-#     # Fill the 2D array with characters from the message
-#     row, direction = 0, 1
-#     for i in range(msg_length):
-#         rail_fence[row][i] = msg[i]
-#         if row == depth - 1:
-#             direction = -1
-#         elif row == 0:
-#             direction = 1
-#         row += direction
-
-#     # Read the characters from the 2D array in the rail order
-#     new_msg = ""
-#     for row in rail_fence:
-#         new_msg += "".join(row)
-
-#     return new_msg
-
-
 def criptoRailFence(msg: str, decypher: bool = False) -> str:
     depth = int(input("Digite a profundidade do Rail Fence: "))
     msg_length = len(msg)
